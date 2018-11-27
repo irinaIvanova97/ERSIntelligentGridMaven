@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Intelligent Grid Help Page</title>
+
+<link rel="stylesheet" type="text/css" href="IntelligentGridHelpStyle.css">
+
+<script type="text/javascript" src="IntelligentGridHelpScript.js"></script>
+
+</head>
+<body>
+
+<blockquote>
+  <span>Welcome To</span>
+  <span>Intelligent Grid</span>
+  <span>Applicatoin!</span>
+</blockquote>
+
+<img border="0" src="images/Table.png" alt="Table" >
+
+	<script>
+		function animate() {
+			document.querySelector('blockquote').classList.toggle('animate');
+		}
+
+		animate();
+
+		document.addEventListener('click', animate);
+
+		setTimeout(animate, 1000);
+		
+		
+	</script>
+
+</body>
+</html>

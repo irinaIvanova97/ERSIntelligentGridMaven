@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" version="2.5">
+	<servlet>
+		<servlet-name>Grid</servlet-name>
+		<servlet-class>servlet.GridServlet
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Grid</servlet-name>
+		<url-pattern>/grid</url-pattern>
+	</servlet-mapping>
+	
+	<welcome-file-list>
+		<welcome-file>dhtmlxGrid.html</welcome-file>
+	</welcome-file-list>
+
+</web-app>

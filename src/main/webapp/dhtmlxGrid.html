@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Grid</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<link rel="stylesheet" type="text/css"
+	href="lib/codebase/fonts/font_roboto/roboto.css" />
+<link rel="stylesheet" type="text/css" href="lib/codebase/dhtmlx.css" />
+<script src="lib/codebase/dhtmlx.js"></script>
+<script src="lib/jquery-3.3.1.min.js"></script>
+
+<script type="text/javascript" src="dhtmlxGridScript.js"></script>
+
+<link rel="stylesheet" type="text/css" href="GridStyle.css">
+
+</head>
+<body onload="doOnLoad();">
+
+	<h1 class="headerStyle">Intelligent Grid</h1>
+	<table>
+		<tr>
+			<td>
+				<div id="innerDiv">
+					<div align="right" id="gridbox"></div>
+				</div>
+			</td>
+			<td>
+				<div class="form-style-6" id="formID">
+
+					<label for="formula1"><span>Formula for Result1:</span> <input
+						type="text" name="formula1" id="formula1"
+						placeholder="Input Formula" /></label> <label for="formula2"><span>Formula
+							for Result2:</span> <input type="text" name="formula2" id="formula2"
+						placeholder="Input Formula" /></label> <label for="formula3"><span>Formula
+							for Result3:</span> <input type="text" name="formula3" id="formula3"
+						placeholder="Input Formula" /></label>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td colspan = "2">
+				<button class="button button2" onclick="onAddRow()">Add row</button>
+
+				<button class="button button2" onclick="onDeleteRow()">Remove
+					Selected Row</button> <span><button class="button button2"
+						onclick="onConfig()" id="config">Configuration</button></span> <span
+				style="margin-left: 6em"><button class="button button2"
+						onclick="onCalculate()">Calculate</button></span>
+			</td>
+		</tr>
+	</table>
+
+	<!-- The Modal -->
+	<div id="myModal" class="modal" class="form-style-6">
+
+		<!-- Modal content -->
+		<div class="modal-content">
+			<div class="modal-header">
+				<span class="close">&times;</span>
+				<h2>Configurate Grid</h2>
+			</div>
+			<div class="form-style-6">
+				<label for="rowsNum"><span>Number of rows:</span> <input
+					type="text" id="rowsNum" placeholder="Input Number of Rows" /></label> <label
+					for="colname1"><span>Name for Column 1:</span> <input
+					type="text" id="colname1" placeholder="Input Name of Column" /></label> <label
+					for="colname2"><span>Name for Column 2:</span> <input
+					type="text" id="colname2" placeholder="Input Name of Column" /></label> <label
+					for="colname3"><span>Name for Column 3:</span> <input
+					type="text" id="colname3" placeholder="Input Name of Column" /></label> <label
+					for="colname4"><span>Name for Column 4:</span> <input
+					type="text" id="colname4" placeholder="Input Name of Column" /></label>
+			</div>
+		</div>
+
+	</div>
+
+	<script>
+		//Get the modal
+		var modal = document.getElementById('myModal');
+
+		// Get the button that opens the modal
+		var btn = document.getElementById("config");
+
+		// Get the <span> element that closes the modal
+		var span = document.getElementsByClassName("close")[0];
+
+		// When the user clicks the button, open the modal 
+		btn.onclick = function() {
+			modal.style.display = "block";
+		}
+
+		// When the user clicks on <span> (x), close the modal
+		span.onclick = function() {
+			modal.style.display = "none";
+		}
+
+		// When the user clicks anywhere outside of the modal, close it
+		window.onclick = function(event) {
+			if (event.target == modal) {
+				modal.style.display = "none";
+			}
+		}
+	</script>
+
+</body>
+</html>

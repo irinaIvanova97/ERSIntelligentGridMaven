@@ -156,7 +156,7 @@ function onCalculate() {
 	
 	var json = JSON.stringify(obj);
 	$.ajax({
-		url : "/IntelligentGrid/grid",
+		url : "/intelligent.grid/grid",
 		type : "POST",
 		dataType : 'json',
 		data : json,

@@ -144,11 +144,11 @@ function onCalculate() {
 		return;
 	}
 	
-	if(!formula1.includes("Data2") && !formula1.includes("Data3") && !formula1.includes("Data4")){
-		alert ("Incorect formula");
+	/*if(!formula1.includes("Data2") && !formula1.includes("Data3") && !formula1.includes("Data4")){
+		alert ("Incorect formula1");
 		document.getElementById('formula1').value ="";
 		return;
-	}
+	}*/
 	
 	var obj = {
 		'json' : items, formula1, formula2, formula3

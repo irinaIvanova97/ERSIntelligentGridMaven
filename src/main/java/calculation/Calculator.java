@@ -36,14 +36,6 @@ public class Calculator {
 		formula2 = formula[1];
 		formula3 = formula[2];
 	}
-
-	private String replaceFormulaWithValues(String formula, List<String> inner) {
-		formula = formula.replace("Data2", inner.get(Data2));
-		formula = formula.replace("Data3", inner.get(Data3));
-		formula = formula.replace("Data4", Double.toString((Double.parseDouble(inner.get(Data4)) / 100)));
-
-		return formula;
-	}
 	
 	private StaticVariableSet<Double> replaceWithValues(List<String> inner) {
 		final StaticVariableSet<Double> variables = new StaticVariableSet<Double>();
@@ -62,17 +54,12 @@ public class Calculator {
 		
 		for (int i = 0; i < dataList.size(); i++) {
 			List<String> inner = dataList.get(i);
-
-			ScriptEngineManager factory = new ScriptEngineManager();
-			ScriptEngine engine = factory.getEngineByName("JavaScript");
 			
 			final DoubleEvaluator eval = new DoubleEvaluator();
-			final StaticVariableSet<Double> variables;
+			StaticVariableSet<Double> variables;
 			
 			if (!formula1.equals("")) {
 				String newFormula1 = formula1;
-				newFormula1 = replaceFormulaWithValues(newFormula1, inner);
-				//result1 = (Number) engine.eval(newFormula1);
 				variables = replaceWithValues(inner);
 				result = eval.evaluate(newFormula1, variables);
 				System.out.println(result);
@@ -80,14 +67,16 @@ public class Calculator {
 
 			if (!formula2.equals("")) {
 				String newFormula2 = formula2;
-				newFormula2 = replaceFormulaWithValues(newFormula2, inner);
-				result2 = (Number) engine.eval(newFormula2);
+				variables = replaceWithValues(inner);
+				result = eval.evaluate(newFormula2, variables);
+				System.out.println(result);
 			}
 
 			if (!formula3.equals("")) {
 				String newFormula3 = formula3;
-				newFormula3 = replaceFormulaWithValues(newFormula3, inner);
-				result3 = (Number) engine.eval(newFormula3);
+				variables = replaceWithValues(inner);
+				result = eval.evaluate(newFormula3, variables);
+				System.out.println(result);
 			}
 
 			List<String> resultInner = new ArrayList<String>();

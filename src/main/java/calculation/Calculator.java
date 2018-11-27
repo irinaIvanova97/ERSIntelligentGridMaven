@@ -128,7 +128,7 @@ public class Calculator {
 		variables.set("Data3", y);
 		// Evaluate the expression
 		Double result = eval.evaluate(expression, variables);
-		// Ouput the result
+		// Output the result
 		System.out.println("x=" + x + " y=" + y + " -> " + expression + " = " + result);
 
 	}

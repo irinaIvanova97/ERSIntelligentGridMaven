@@ -37,20 +37,26 @@ public class Calculator {
 		formula3 = formula[2];
 	}
 	
-	private StaticVariableSet<Double> replaceWithValues(List<String> inner) {
+	private StaticVariableSet<Double> replaceWithValues(List<String> inner, double result1, double result2) {
 		final StaticVariableSet<Double> variables = new StaticVariableSet<Double>();
 		variables.set("Data2", Double.parseDouble(inner.get(Data2)));
 		variables.set("Data3", Double.parseDouble(inner.get(Data3)));
 		variables.set("Data4", Double.parseDouble(inner.get(Data4))/100);
+		variables.set("Result1", result1);
+		variables.set("Result2", result2);
 		return variables;
+	}
+																	//Data2[1]
+	private Double IndexOfData(List<List<String>> dataList, String CurrentData) { //[Row1->[Data1, Data2...],Row2->[...],Row3->[...]]
+		String row = CurrentData.substring(CurrentData.indexOf("[")+1, CurrentData.indexOf("]"));	
+		String col = CurrentData.substring(CurrentData.indexOf("[")-1, CurrentData.indexOf("]")-2);	
+		return Double.parseDouble(dataList.get(Integer.parseInt(row)).get(Integer.parseInt(col)-1));
 	}
 
 	public List<List<String>> calculateResult() throws ScriptException {
-		Number result1 = 0.0;
-		Number result2 = 0.0;
-		Number result3 = 0.0;
-		
-		Double result = 0.0;
+		Double result1 = 0.0;
+		Double result2 = 0.0;
+		Double result3 = 0.0;
 		
 		for (int i = 0; i < dataList.size(); i++) {
 			List<String> inner = dataList.get(i);
@@ -60,23 +66,20 @@ public class Calculator {
 			
 			if (!formula1.equals("")) {
 				String newFormula1 = formula1;
-				variables = replaceWithValues(inner);
-				result = eval.evaluate(newFormula1, variables);
-				System.out.println(result);
+				variables = replaceWithValues(inner, result1, result2);
+				result1 = eval.evaluate(newFormula1, variables);
 			}
 
 			if (!formula2.equals("")) {
 				String newFormula2 = formula2;
-				variables = replaceWithValues(inner);
-				result = eval.evaluate(newFormula2, variables);
-				System.out.println(result);
+				variables = replaceWithValues(inner, result1, result2);
+				result2 = eval.evaluate(newFormula2, variables);
 			}
 
 			if (!formula3.equals("")) {
 				String newFormula3 = formula3;
-				variables = replaceWithValues(inner);
-				result = eval.evaluate(newFormula3, variables);
-				System.out.println(result);
+				variables = replaceWithValues(inner, result1, result2);
+				result3 = eval.evaluate(newFormula3, variables);
 			}
 
 			List<String> resultInner = new ArrayList<String>();
@@ -86,26 +89,32 @@ public class Calculator {
 			otherSymbols.setDecimalSeparator('.');
 			DecimalFormat df = new DecimalFormat("##########.##", otherSymbols);
 
-			if (result != 0.0)
-				resultInner.add(df.format(result));
+			if (result1 != 0.0)
+				resultInner.add(0, df.format(result1));
+			else
+				resultInner.add("");
+			
 			if ((Double) result2 != 0.0)
-				resultInner.add(df.format(result2));
+				resultInner.add(1, df.format(result2));
+			else
+				resultInner.add("");
+			
 			if ((Double) result3 != 0.0)
-				resultInner.add(df.format(result3));
+				resultInner.add(2, df.format(result3));
+			else
+				resultInner.add("");
 
 			resultList.add(resultInner);
 
 		}
-
-		resultList.forEach(element -> {
-			element.forEach(inner -> System.out.println(inner));
-		});
-
+		
+		System.out.println(IndexOfData(dataList, "Data2[1]"));
+		
 		return resultList;
 	}
 
 	public static void main(String[] args) throws ScriptException {
-		final String expression = "Data2*Data3"; // Here is the expression to evaluate
+		/*final String expression = "Data2*Data3"; // Here is the expression to evaluate
 		// Create the evaluator
 		final DoubleEvaluator eval = new DoubleEvaluator();
 		// Create a new empty variable set
@@ -118,7 +127,9 @@ public class Calculator {
 		// Evaluate the expression
 		Double result = eval.evaluate(expression, variables);
 		// Output the result
-		System.out.println("x=" + x + " y=" + y + " -> " + expression + " = " + result);
+		System.out.println("x=" + x + " y=" + y + " -> " + expression + " = " + result);*/
+		
+		
 
 	}
 }

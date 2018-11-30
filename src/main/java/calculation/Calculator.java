@@ -15,6 +15,7 @@ import com.fathzer.soft.javaluator.StaticVariableSet;
 
 public class Calculator {
 
+	private List<String> columns = new ArrayList<String>();
 	private List<List<String>> dataList = new ArrayList<List<String>>();
 	private List<List<String>> resultList = new ArrayList<List<String>>();
 	private String formula1;
@@ -29,7 +30,8 @@ public class Calculator {
 
 	}
 
-	public Calculator(List<List<String>> ls, String... formula) {
+	public Calculator(List<String>cols ,List<List<String>> ls, String... formula) {
+		columns = cols;
 		dataList = ls;
 
 		formula1 = formula[0];

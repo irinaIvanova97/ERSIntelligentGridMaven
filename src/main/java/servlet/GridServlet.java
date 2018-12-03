@@ -80,20 +80,28 @@ public class GridServlet extends HttpServlet {
 			JSONObject obj = new JSONObject(body);
 			arr = obj.getJSONArray("json");
 			List<List<String>> list = new ArrayList<List<String>>();
+			List<String> columns = new ArrayList<String>();
 
 			for (int i = 0; i < arr.length(); i++) {
 				List<String> innerList = new ArrayList<>();
+				//columns.add(arr.getJSONArray(i).getString(i));
 				for (int j = 0; j < arr.getJSONArray(i).length(); j++) {
 					innerList.add(arr.getJSONArray(i).getString(j));
 				}
 				list.add(innerList);
 			}
-
+			
+			JSONArray cols = obj.getJSONArray("columns");
+			System.out.println(cols.toString());
+			for (int i = 0; i < cols.length(); i++) {
+				columns.add(cols.getString(i));
+			}
+			
 			String formula1 = obj.getString("formula1");
 			String formula2 = obj.getString("formula2");
 			String formula3 = obj.getString("formula3");
 
-			Calculator calculator = new Calculator(list, formula1, formula2, formula3);
+			Calculator calculator = new Calculator(columns, list, formula1, formula2, formula3);
 			result = calculator.calculateResult();
 			
 			String json = "";

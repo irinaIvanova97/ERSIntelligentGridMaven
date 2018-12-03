@@ -19,7 +19,7 @@ dhtmlxValidation.isMax10 = function(data) {// data should include less than 10
 var myGrid;
 function doOnLoad() {
 	myGrid = new dhtmlXGridObject('gridbox');
-	myGrid.setHeader("Column number, A, B, C, D, Result1, Result2, Result3");
+	myGrid.setHeader("Column number,A,B,C,D,Result1,Result2,Result3");
 	myGrid.setInitWidths("70,*,*,*,*,*,*,*");
 	myGrid.setColAlign("left,left,left,left,left,left,left,left");
 	myGrid.setColTypes("ro,edtxt,edn,edn,edn,ro,ro,ro");
@@ -118,7 +118,6 @@ function onCalculate() {
 	for (var i = 0; i < myGrid.getRowsNum(); i++) {
 		items[i] = [];
 		for (var j = 1; j < myGrid.getColumnsNum() - 3; j++) {
-			columns[j - 1] = myGrid.getColLabel(j);
 			var cellValue = myGrid.cellByIndex(i, j).getValue();
 			
 			if (cellValue == "" ) {
@@ -136,6 +135,11 @@ function onCalculate() {
 		}
 
 	}
+	
+	for(var i = 1; i < myGrid.getColumnsNum(); i++)
+		{
+		columns[i - 1] = myGrid.getColLabel(i);
+		}
 	
 	var formula1 = document.getElementById('formula1').value;
 	var formula2 = document.getElementById('formula2').value;

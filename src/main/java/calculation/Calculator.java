@@ -41,11 +41,19 @@ public class Calculator {
 	
 	private StaticVariableSet<Double> replaceWithValues(List<String> inner, double result1, double result2) {
 		final StaticVariableSet<Double> variables = new StaticVariableSet<Double>();
-		variables.set("Data2", Double.parseDouble(inner.get(Data2)));
-		variables.set("Data3", Double.parseDouble(inner.get(Data3)));
-		variables.set("Data4", Double.parseDouble(inner.get(Data4))/100);
-		variables.set("Result1", result1);
-		variables.set("Result2", result2);
+		if(columns.get(1).contains("[") && columns.get(1).contains("]"))
+		{
+			variables.set(columns.get(1), IndexOfData(dataList, inner.get(Data2)));
+		}
+		else
+		{
+			variables.set(columns.get(1), Double.parseDouble(inner.get(Data2)));
+		}
+		
+		variables.set(columns.get(2), Double.parseDouble(inner.get(Data3)));
+		variables.set(columns.get(3), Double.parseDouble(inner.get(Data4))/100);
+		variables.set(columns.get(4), result1);
+		variables.set(columns.get(5), result2);
 		return variables;
 	}
 																	//Data2[1]

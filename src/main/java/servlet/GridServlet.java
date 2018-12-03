@@ -81,7 +81,7 @@ public class GridServlet extends HttpServlet {
 			JSONObject obj = new JSONObject(body);
 			arr = obj.getJSONArray("json");
 			List<List<String>> list = new ArrayList<List<String>>();
-			List<String> columns = new ArrayList();
+			List<String> columns = new ArrayList<String>();
 
 			for (int i = 0; i < arr.length(); i++) {
 				List<String> innerList = new ArrayList<>();
@@ -92,10 +92,10 @@ public class GridServlet extends HttpServlet {
 				list.add(innerList);
 			}
 			
-			JSONArray test = obj.getJSONArray("columns");
-			System.out.println(test.toString());
-			for (int i = 0; i < test.length(); i++) {
-				columns.add(test.getString(i));
+			JSONArray cols = obj.getJSONArray("columns");
+			System.out.println(cols.toString());
+			for (int i = 0; i < cols.length(); i++) {
+				columns.add(cols.getString(i));
 			}
 			
 			String formula1 = obj.getString("formula1");

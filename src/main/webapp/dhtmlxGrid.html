@@ -39,13 +39,14 @@
 			</td>
 		</tr>
 		<tr>
-			<td colspan = "2">
+			<td colspan="2">
 				<button class="button button2" onclick="onAddRow()">Add row</button>
 
 				<button class="button button2" onclick="onDeleteRow()">Remove
-					Selected Row</button> <span><button class="button button2"
-						onclick="onConfig()" id="config">Configuration</button></span> <span
-				style="margin-left: 6em"><button class="button button2"
+					Selected Row</button> <span>
+
+					<button class="button button2" onclick="onConfig()" id="config">Configuration</button>
+			</span> <span style="margin-left: 6em"><button class="button button2"
 						onclick="onCalculate()">Calculate</button></span>
 			</td>
 		</tr>
@@ -60,48 +61,40 @@
 				<span class="close">&times;</span>
 				<h2>Configurate Grid</h2>
 			</div>
-			<div class="form-style-6">
-				<label for="rowsNum"><span>Number of rows:</span> <input
-					type="text" id="rowsNum" placeholder="Input Number of Rows" /></label> <label
-					for="colname1"><span>Name for Column 1:</span> <input
-					type="text" id="colname1" placeholder="Input Name of Column" /></label> <label
-					for="colname2"><span>Name for Column 2:</span> <input
-					type="text" id="colname2" placeholder="Input Name of Column" /></label> <label
-					for="colname3"><span>Name for Column 3:</span> <input
-					type="text" id="colname3" placeholder="Input Name of Column" /></label> <label
-					for="colname4"><span>Name for Column 4:</span> <input
-					type="text" id="colname4" placeholder="Input Name of Column" /></label>
-			</div>
+
+			<table>
+				<tr>
+					<td><div id="divConfig" class="form-style-6">
+							<label for="rowsNum"><span>Number of rows:</span> <input
+								type="text" id="rowsNum" placeholder="Input Number of Rows" /></label>
+							<label for="colname1"><span>Name for Column 1:</span> <input
+								type="text" id="colName1" placeholder="Input Name of Column" /></label>
+							<label for="colname2"><span>Name for Column 2:</span> <input
+								type="text" id="colName2" placeholder="Input Name of Column" /></label>
+							<label for="colname3"><span>Name for Column 3:</span> <input
+								type="text" id="colName3" placeholder="Input Name of Column" /></label>
+							<label for="colname4"><span>Name for Column 4:</span> <input
+								type="text" id="colName4" placeholder="Input Name of Column" /></label>
+							<label for="colname5"><span>Name for Column 5:</span> <input
+								type="text" id="colName5" placeholder="Input Name of Column" /></label>
+							<label for="colname6"><span>Name for Column 6:</span> <input
+								type="text" id="colName6" placeholder="Input Name of Column" /></label>
+							<label for="colname7"><span>Name for Column 7:</span> <input
+								type="text" id="colName7" placeholder="Input Name of Column" /></label>
+
+							<input type="submit" value="Submit" class="button button2"
+								onClick="onSubmitConfig()" />
+						</div></td>
+				</tr>
+
+			</table>
+
 		</div>
 
 	</div>
 
 	<script>
-		//Get the modal
-		var modal = document.getElementById('myModal');
-
-		// Get the button that opens the modal
-		var btn = document.getElementById("config");
-
-		// Get the <span> element that closes the modal
-		var span = document.getElementsByClassName("close")[0];
-
-		// When the user clicks the button, open the modal 
-		btn.onclick = function() {
-			modal.style.display = "block";
-		}
-
-		// When the user clicks on <span> (x), close the modal
-		span.onclick = function() {
-			modal.style.display = "none";
-		}
-
-		// When the user clicks anywhere outside of the modal, close it
-		window.onclick = function(event) {
-			if (event.target == modal) {
-				modal.style.display = "none";
-			}
-		}
+		
 	</script>
 
 </body>

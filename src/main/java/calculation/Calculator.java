@@ -5,9 +5,9 @@ import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
 import com.fathzer.soft.javaluator.DoubleEvaluator;
@@ -38,28 +38,33 @@ public class Calculator {
 		formula2 = formula[1];
 		formula3 = formula[2];
 	}
-
-	private StaticVariableSet<Double> replaceWithValues(List<String> inner, double result1, double result2) {
+	
+	private StaticVariableSet<Double> replaceWithValues(String formula, List<String> inner, double result1, double result2) {
 		final StaticVariableSet<Double> variables = new StaticVariableSet<Double>();
-		if(columns.get(1).contains("[") && columns.get(1).contains("]"))
+		if(formula.contains("[") && formula.contains("]"))
 		{
-			variables.set(columns.get(1), IndexOfData(dataList, inner.get(Data2)));
+			variables.set(columns.get(1), IndexOfData(dataList, formula));
+			variables.set(columns.get(2), IndexOfData(dataList, inner.get(Data3)));
+			variables.set(columns.get(3), IndexOfData(dataList, inner.get(Data4))/100);
+			variables.set(columns.get(4), IndexOfData(dataList, (Double.toString(result1))));
+			variables.set(columns.get(5), IndexOfData(dataList, (Double.toString(result2))));
 		}
 		else
 		{
 			variables.set(columns.get(1), Double.parseDouble(inner.get(Data2)));
+			variables.set(columns.get(2), Double.parseDouble(inner.get(Data3)));
+			variables.set(columns.get(3), Double.parseDouble(inner.get(Data4))/100);
+			variables.set(columns.get(4), result1);
+			variables.set(columns.get(5), result2);
 		}
-		
-		variables.set(columns.get(2), Double.parseDouble(inner.get(Data3)));
-		variables.set(columns.get(3), Double.parseDouble(inner.get(Data4))/100);
-		variables.set(columns.get(4), result1);
-		variables.set(columns.get(5), result2);
 		return variables;
 	}
-																	//Data2[1]
+																    //B[1] + 5  Datatatataat[5]   5+B[1]
 	private Double IndexOfData(List<List<String>> dataList, String CurrentData) { //[Row1->[Data1, Data2...],Row2->[...],Row3->[...]]
 		String row = CurrentData.substring(CurrentData.indexOf("[")+1, CurrentData.indexOf("]"));	
-		String col = CurrentData.substring(CurrentData.indexOf("[")-1, CurrentData.indexOf("]")-2);	
+		String col = CurrentData.substring(CurrentData.charAt(0),CurrentData.indexOf("["));
+		
+		//String col = CurrentData.substring(CurrentData.indexOf("[")-1, CurrentData.indexOf("]")-2);	
 		return Double.parseDouble(dataList.get(Integer.parseInt(row)).get(Integer.parseInt(col)-1));
 	}
 
@@ -70,25 +75,25 @@ public class Calculator {
 		
 		for (int i = 0; i < dataList.size(); i++) {
 			List<String> inner = dataList.get(i);
-
+			
 			final DoubleEvaluator eval = new DoubleEvaluator();
 			StaticVariableSet<Double> variables;
-
+			
 			if (!formula1.equals("")) {
 				String newFormula1 = formula1;
-				variables = replaceWithValues(inner, result1, result2);
+				variables = replaceWithValues(newFormula1, inner, result1, result2);
 				result1 = eval.evaluate(newFormula1, variables);
 			}
 
 			if (!formula2.equals("")) {
 				String newFormula2 = formula2;
-				variables = replaceWithValues(inner, result1, result2);
+				variables = replaceWithValues(newFormula2, inner, result1, result2);
 				result2 = eval.evaluate(newFormula2, variables);
 			}
 
 			if (!formula3.equals("")) {
 				String newFormula3 = formula3;
-				variables = replaceWithValues(inner, result1, result2);
+				variables = replaceWithValues(newFormula3, inner, result1, result2);
 				result3 = eval.evaluate(newFormula3, variables);
 			}
 
@@ -100,20 +105,20 @@ public class Calculator {
 			DecimalFormat df = new DecimalFormat("##########.##", otherSymbols);
 
 			if (result1 != 0.0)
-				resultInner.add(df.format(result1));
+				resultInner.add(0, df.format(result1));
+			else
+				resultInner.add("");
+			
+			if ((Double) result2 != 0.0)
+				resultInner.add(1, df.format(result2));
+			else
+				resultInner.add("");
+			
+			if ((Double) result3 != 0.0)
+				resultInner.add(2, df.format(result3));
 			else
 				resultInner.add("");
 
-			if (result2 != 0.0)
-				resultInner.add(df.format(result2));
-			else
-				resultInner.add("");
-
-			if (result3 != 0.0)
-				resultInner.add(df.format(result3));
-			else
-				resultInner.add("");
-		
 			resultList.add(resultInner);
 
 		}
@@ -121,29 +126,5 @@ public class Calculator {
 		System.out.println(IndexOfData(dataList, "Data2[1]"));
 		
 		return resultList;
-	}
-
-	public static void main(String[] args) throws ScriptException {
-		/*final String expression = "Data2*Data3"; // Here is the expression to evaluate
-		// Create the evaluator
-		final DoubleEvaluator eval = new DoubleEvaluator();
-		// Create a new empty variable set
-		final StaticVariableSet<Double> variables = new StaticVariableSet<Double>();
-		double x = 3;
-		double y = -2;
-		// Set the value of x
-		variables.set("Data2", x);
-		variables.set("Data3", y);
-		// Evaluate the expression
-		Double result = eval.evaluate( expression, variables);
-		// Output the result
-		System.out.println("x=" + x + " y=" + y + " -> " + expression + " = " + result);*/
-		
-		String str = "United Arab Emirates Dirham (3) dwadwa 2[67] ffes [4444.5]";
-		String answer = str.substring(str.indexOf("[")+1, str.indexOf("]"));
-		String answer2 = str.substring(str.indexOf("[")-1, str.indexOf("]")-2);
-		
-		System.out.println(answer);
-		System.out.println(answer2);
 	}
 }

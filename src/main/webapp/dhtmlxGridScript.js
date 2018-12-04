@@ -19,7 +19,7 @@ dhtmlxValidation.isMax10 = function(data) {// data should include less than 10
 var myGrid;
 function doOnLoad() {
 	myGrid = new dhtmlXGridObject('gridbox');
-	myGrid.setHeader("Column number,A,B,C,D,Result1,Result2,Result3");
+	myGrid.setHeader("Row number,A,B,C,D,Result1,Result2,Result3");
 	myGrid.setInitWidths("70,*,*,*,*,*,*,*");
 	myGrid.setColAlign("left,left,left,left,left,left,left,left");
 	myGrid.setColTypes("ro,edtxt,edn,edn,edn,ro,ro,ro");
@@ -54,7 +54,7 @@ function onDeleteRow() {
 }
 
 function validate(i, j){
-	//var numbers = /^[0-9.]+$/; // only for positive
+	// var numbers = /^[0-9.]+$/; // only for positive
 	var numbers  = /^-?\d*\.?\d+$/; // positive and negative numbers
 	var text = /^[a-zA-Z]+$/;
 	
@@ -169,7 +169,7 @@ function onCalculate() {
 
 function onConfig(){
 	$("#divConfig").css({height:"350px", overflow:"auto"});
-	//Get the modal
+	// Get the modal
 	var modal = document.getElementById('myModal');
 
 	// Get the button that opens the modal
@@ -178,7 +178,7 @@ function onConfig(){
 	// Get the <span> element that closes the modal
 	var span = document.getElementsByClassName("close")[0];
 
-	// When the user clicks the button, open the modal 
+	// When the user clicks the button, open the modal
 	btn.onclick = function() {
 		modal.style.display = "block";
 	}
@@ -195,7 +195,7 @@ function onConfig(){
 		}
 	}
 	
-	//myGrid.setColumnLabel(1,"New Column Label");
+	// myGrid.setColumnLabel(1,"New Column Label");
 }
 
 function onSubmitConfig(){
@@ -213,6 +213,17 @@ function onSubmitConfig(){
 	var colNum=myGrid.getColumnsNum();
 	
 	for(var i=1;i<colNum;i++){
-		myGrid.setColumnLabel(i,newColumnNames[i-1]);
+		if(newColumnNames[i-1]!="")
+			myGrid.setColumnLabel(i,newColumnNames[i-1]);
+	}
+	
+	var btnSubmit = document.getElementById("submitConfig");
+	
+	/*btnSubmit.onclick = function() {
+		modal.style.display = "block";
+	}*/
+	
+	for(var i = 0; i<rowsNum ;i++){
+		myGrid.addRow(i + myGrid.getRowsNum() + 1, [ i + myGrid.getRowsNum() + 1, '', '', '', '', '', '' ], -1)
 	}
 }

@@ -59,13 +59,15 @@ public class Calculator {
 		}
 		return variables;
 	}
-																    //B[1] + 5  Datatatataat[5]   5+B[1]
-	private Double IndexOfData(List<List<String>> dataList, String CurrentData) { //[Row1->[Data1, Data2...],Row2->[...],Row3->[...]]
+																    //5+B[1]
+	private Double IndexOfData(List<List<String>> dataList, String CurrentData) {
 		String row = CurrentData.substring(CurrentData.indexOf("[")+1, CurrentData.indexOf("]"));	
-		String col = CurrentData.substring(CurrentData.charAt(0),CurrentData.indexOf("["));
+		String col = CurrentData.substring(0, CurrentData.indexOf("["));
+		System.out.println(col);
 		
+		int index = columns.lastIndexOf(col);
 		//String col = CurrentData.substring(CurrentData.indexOf("[")-1, CurrentData.indexOf("]")-2);	
-		return Double.parseDouble(dataList.get(Integer.parseInt(row)).get(Integer.parseInt(col)-1));
+		return Double.parseDouble(dataList.get(Integer.parseInt(row)).get(index));
 	}
 
 	public List<List<String>> calculateResult() throws ScriptException {
@@ -123,7 +125,7 @@ public class Calculator {
 
 		}
 		
-		System.out.println(IndexOfData(dataList, "Data2[1]"));
+		System.out.println(IndexOfData(dataList, "5+Data3[2]"));
 		
 		return resultList;
 	}

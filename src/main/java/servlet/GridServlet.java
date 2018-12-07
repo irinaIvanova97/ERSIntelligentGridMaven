@@ -98,8 +98,12 @@ public class GridServlet extends HttpServlet {
 			String formula1 = obj.getString("formula1");
 			String formula2 = obj.getString("formula2");
 			String formula3 = obj.getString("formula3");
-
-			Calculator calculator = new Calculator(columns, list, formula1, formula2, formula3);
+			
+			StringBuilder builder1 = new StringBuilder(formula1);
+			StringBuilder builder2 = new StringBuilder(formula2);
+			StringBuilder builder3 = new StringBuilder(formula3);
+			
+			Calculator calculator = new Calculator(columns, list, builder1, builder2, builder3);
 			result = calculator.calculateResult();
 			
 			String json = "";

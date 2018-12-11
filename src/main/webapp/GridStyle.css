@@ -29,9 +29,10 @@
 .form-style-6 {
 	align: right;
 	font: 95% Times New Roman, Helvetica, sans-serif;
-	max-width: 400px;
+	max-width: auto;
 	padding: 16px;
 	background: #F7F7F7;
+	overflow: auto; /* Enable scroll if needed */
 }
 
 h1.headerStyle {

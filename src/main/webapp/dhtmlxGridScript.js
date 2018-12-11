@@ -167,35 +167,28 @@ function onCalculate() {
 	});
 }
 
+var dhxWins, windowID;
 function onConfig(){
-	$("#divConfig").css({height:"350px", overflow:"auto"});
-	// Get the modal
-	var modal = document.getElementById('myModal');
-
-	// Get the button that opens the modal
-	var btn = document.getElementById("config");
-
-	// Get the <span> element that closes the modal
-	var span = document.getElementsByClassName("close")[0];
-
-	// When the user clicks the button, open the modal
-	btn.onclick = function() {
-		modal.style.display = "block";
-	}
-
-	// When the user clicks on <span> (x), close the modal
-	span.onclick = function() {
-		modal.style.display = "none";
-	}
-
-	// When the user clicks anywhere outside of the modal, close it
-	window.onclick = function(event) {
-		if (event.target == modal) {
-			modal.style.display = "none";
-		}
-	}
+	dhxWins = new dhtmlXWindows();
 	
-	// myGrid.setColumnLabel(1,"New Column Label");
+	var width = 500;
+    var height = 500;
+	
+    var top = parseInt((screen.availHeight/2) - (height/2));
+    var left = parseInt((screen.availWidth/2) - (width/2));
+    
+	windowID = 1;
+	var w1 = dhxWins.createWindow(windowID, left, top, width, height);
+	dhxWins.window(windowID).setText("Configurate Grid");
+	dhxWins.window(windowID).centerOnScreen();
+	dhxWins.window(windowID).setModal(true);
+	dhxWins.window(windowID).showInnerScroll();
+	//dhxWins.window(windowID).denyResize();
+	
+	requirejs(['text!divConfig.html'], function(html){
+		w1.attachHTMLString(html);
+		
+	});
 }
 
 function onSubmitConfig(){
@@ -219,11 +212,9 @@ function onSubmitConfig(){
 	
 	var btnSubmit = document.getElementById("submitConfig");
 	
-	/*btnSubmit.onclick = function() {
-		modal.style.display = "block";
-	}*/
-	
 	for(var i = 0; i<rowsNum ;i++){
 		myGrid.addRow(i + myGrid.getRowsNum() + 1, [ i + myGrid.getRowsNum() + 1, '', '', '', '', '', '' ], -1)
 	}
+	
+	dhxWins.window(windowID).close();
 }

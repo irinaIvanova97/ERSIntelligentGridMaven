@@ -103,7 +103,9 @@ public class GridServlet extends HttpServlet {
 			StringBuilder builder2 = new StringBuilder(formula2);
 			StringBuilder builder3 = new StringBuilder(formula3);
 			
-			Calculator calculator = new Calculator(columns, list, builder1, builder2, builder3);
+			String digitsAfterPoint = obj.getString("digitsAfterPoint");
+			
+			Calculator calculator = new Calculator(columns, list, digitsAfterPoint ,builder1, builder2, builder3);
 			result = calculator.calculateResult();
 			
 			String json = "";

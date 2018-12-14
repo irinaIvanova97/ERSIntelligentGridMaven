@@ -110,11 +110,13 @@ function onSuccess(data){
 	}
 }
 
+
+var digitsAfterPoint = "";
+
 function onCalculate() {
 	var items = [];
 	var columns = [];
 	
-
 	for (var i = 0; i < myGrid.getRowsNum(); i++) {
 		items[i] = [];
 		for (var j = 1; j < myGrid.getColumnsNum() - 3; j++) {
@@ -151,7 +153,7 @@ function onCalculate() {
 	}
 	
 	var obj = {
-		'json' :items, columns, formula1, formula2, formula3
+		'json' :items, columns, formula1, formula2, formula3, digitsAfterPoint
 	}
 	
 	var json = JSON.stringify(obj);
@@ -179,7 +181,7 @@ function onConfig(){
     
 	windowID = 1;
 	var w1 = dhxWins.createWindow(windowID, left, top, width, height);
-	dhxWins.window(windowID).setText("Configurate Grid");
+	dhxWins.window(windowID).setText("Configure Grid");
 	dhxWins.window(windowID).centerOnScreen();
 	dhxWins.window(windowID).setModal(true);
 	dhxWins.window(windowID).showInnerScroll();
@@ -193,6 +195,7 @@ function onConfig(){
 
 function onSubmitConfig(){
 	var rowsNum = document.getElementById("rowsNum").value;
+	digitsAfterPoint = document.getElementById("digits").value;
 	var colName1 = document.getElementById("colName1").value;
 	var colName2 = document.getElementById("colName2").value;
 	var colName3 = document.getElementById("colName3").value;
@@ -210,10 +213,10 @@ function onSubmitConfig(){
 			myGrid.setColumnLabel(i,newColumnNames[i-1]);
 	}
 	
-	var btnSubmit = document.getElementById("submitConfig");
-	
-	for(var i = 0; i<rowsNum ;i++){
-		myGrid.addRow(i + myGrid.getRowsNum() + 1, [ i + myGrid.getRowsNum() + 1, '', '', '', '', '', '' ], -1)
+	var currentRows = myGrid.getRowsNum();
+	currentRows += 1;
+	for(var i = currentRows; i< currentRows + parseInt(rowsNum) ;i++){
+		myGrid.addRow(i , [ i  , '', '', '', '', '', '' ], -1)
 	}
 	
 	dhxWins.window(windowID).close();

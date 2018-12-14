@@ -42,9 +42,9 @@ function doOnLoad() {
 	
 }
 
-var rowID = 3;
 
 function onAddRow() {
+	var rowID = myGrid.getRowsNum();
 	rowID = rowID + 1;
 	myGrid.addRow(rowID, [ rowID, '', '', '', '', '', '' ], -1)
 }
@@ -54,7 +54,6 @@ function onDeleteRow() {
 }
 
 function validate(i, j){
-	// var numbers = /^[0-9.]+$/; // only for positive
 	var numbers  = /^-?\d*\.?\d+$/; // positive and negative numbers
 	var text = /^[a-zA-Z]+$/;
 	

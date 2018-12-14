@@ -15,13 +15,16 @@ public class Calculator {
 	private List<String> columns = new ArrayList<String>();
 	private List<List<String>> dataList = new ArrayList<List<String>>();
 	private List<List<String>> resultList = new ArrayList<List<String>>();
+	
 	private StringBuilder formula1;
 	private StringBuilder formula2;
 	private StringBuilder formula3;
+	private String digitsAfterPoint;
 	private int Data2 = 1;
 	private int Data3 = 2;
 	private int Data4 = 3;
-	private String digitsAfterPoint;
+	private DecimalFormat df;
+	
 	public Calculator() {
 
 	}
@@ -35,6 +38,53 @@ public class Calculator {
 		formula3 = formula[2];
 		
 		this.digitsAfterPoint = digits;
+	}
+	
+	public List<List<String>> calculateResult() throws ScriptException {
+		Double result1 = 0.0;
+		Double result2 = 0.0;
+		Double result3 = 0.0;
+		
+		setFormat();
+		
+		
+		for (int i = 0; i < dataList.size(); i++) {
+			List<String> inner = dataList.get(i);
+			List<String> resultInner = new ArrayList<String>();
+			
+			final DoubleEvaluator eval = new DoubleEvaluator();
+			StaticVariableSet<Double> variables;
+			
+			if (!formula1.toString().equals("")) 
+			{
+				//if(formula1.toString().contains(s))
+				variables = replaceWithValues(formula1, inner, result1, result2);
+				result1 = eval.evaluate(formula1.toString(), variables);
+				resultAdd(result1, 0, resultInner);
+				dataList.get(i).add(resultInner.get(0));
+			}
+
+			if (!formula2.toString().equals("")) 
+			{
+				variables = replaceWithValues(formula2, inner, result1, result2);
+				result2 = eval.evaluate(formula2.toString(), variables);
+				resultAdd(result2, 1, resultInner);
+				dataList.get(i).add(resultInner.get(1));
+			}
+
+			if (!formula3.toString().equals("")) 
+			{
+				variables = replaceWithValues(formula3, inner, result1, result2);
+				result3 = eval.evaluate(formula3.toString(), variables);
+				resultAdd(result3, 2, resultInner);
+				dataList.get(i).add(resultInner.get(2));
+			}
+			
+			resultList.add(resultInner);
+
+		}
+		
+		return resultList;
 	}
 	
 	private StaticVariableSet<Double> replaceWithValues(StringBuilder formula, List<String> inner, double result1, double result2) {
@@ -77,72 +127,27 @@ public class Calculator {
 			return CurrentData;
 	}
 
-	public List<List<String>> calculateResult() throws ScriptException {
-		Double result1 = 0.0;
-		Double result2 = 0.0;
-		Double result3 = 0.0;
+	private void resultAdd (Double result, int col, List<String> resultList) {	
+		if (result != 0.0)
+			resultList.add(col, df.format(result));
+		else
+			resultList.add("");
+	}
+	
+	private void setFormat(){
+		Locale currentLocale = Locale.getDefault();
+		DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(currentLocale);
+		otherSymbols.setDecimalSeparator('.');
 		
-		for (int i = 0; i < dataList.size(); i++) {
-			List<String> inner = dataList.get(i);
-			
-			final DoubleEvaluator eval = new DoubleEvaluator();
-			StaticVariableSet<Double> variables;
-			
-			List<String> resultInner = new ArrayList<String>();
-
-			Locale currentLocale = Locale.getDefault();
-			DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(currentLocale);
-			otherSymbols.setDecimalSeparator('.');
-			
-			DecimalFormat df;
-			if (!digitsAfterPoint.equals("") && digitsAfterPoint.matches("^[1-9]\\d*$"))
-            {
-                StringBuilder format = new StringBuilder("##########.");
-                for (int j = 0; j < Integer.parseInt(digitsAfterPoint); j++) {
-                    format.append("#");
-                }
-                df = new DecimalFormat(format.toString(), otherSymbols);
-            } else
-                df = new DecimalFormat("##########.##", otherSymbols);
-			
-			if (!formula1.toString().equals("")) {
-				variables = replaceWithValues(formula1, inner, result1, result2);
-				result1 = eval.evaluate(formula1.toString(), variables);
-				if (result1 != 0.0)
-					resultInner.add(0, df.format(result1));
-				else
-					resultInner.add("");
-				
-				dataList.get(i).add(resultInner.get(0));
-			}
-
-			if (!formula2.toString().equals("")) {
-				variables = replaceWithValues(formula2, inner, result1, result2);
-				result2 = eval.evaluate(formula2.toString(), variables);
-				
-				if ((Double) result2 != 0.0)
-					resultInner.add(1, df.format(result2));
-				else
-					resultInner.add("");
-				
-				dataList.get(i).add(resultInner.get(1));
-			}
-
-			if (!formula3.toString().equals("")) {
-				variables = replaceWithValues(formula3, inner, result1, result2);
-				result3 = eval.evaluate(formula3.toString(), variables);
-				
-				if ((Double) result3 != 0.0)
-					resultInner.add(2, df.format(result3));
-				else
-					resultInner.add("");
-				dataList.get(i).add(resultInner.get(2));
-			}
-			
-			resultList.add(resultInner);
-
-		}
 		
-		return resultList;
+        if (!digitsAfterPoint.equals("") && digitsAfterPoint.matches("^[1-9]\\d*$"))
+        {
+            StringBuilder format = new StringBuilder("##########.");
+            for (int j = 0; j < Integer.parseInt(digitsAfterPoint); j++) {
+                format.append("#");
+            }
+            df = new DecimalFormat(format.toString(), otherSymbols);
+        }else
+            df = new DecimalFormat("##########.##", otherSymbols);
 	}
 }

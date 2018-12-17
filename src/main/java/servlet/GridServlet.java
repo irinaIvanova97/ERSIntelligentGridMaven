@@ -7,7 +7,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.script.ScriptException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -126,8 +125,14 @@ public class GridServlet extends HttpServlet {
 
 		} catch (JSONException e) {
 			e.printStackTrace();
-		} catch (ScriptException e) {
+		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
+			response.getWriter().write("Invalid Input");
+		}
+		catch(IndexOutOfBoundsException e)
+		{
+			e.printStackTrace();
+			response.getWriter().write("Invalid Index");
 		}
 		
 	}

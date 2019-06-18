@@ -46,4 +46,5 @@ Intelligent Grid->target в директорията на Apache Tomcat 9->webap
 
 След приключване на работата се затваря браузъра, а сървърът се спира от 
 директорията на сървъра->bin, файлът „shutdown.bat”.
+
 ![image](https://drive.google.com/uc?export=view&id=1QQcO-L0ZhEOYhW0a6T6V1nTuETU5kPhY)
